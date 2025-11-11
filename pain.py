@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import FastICA 
+from scipy.signal import butter, filtfilt
+
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
@@ -10,7 +12,7 @@ video_paths = ["vid1.mov", "vid2.mov", "vid3.mov", "vid4.mov"]
 video_data = {}
 first_frames = {}
 
-# ---- Step 1: Read videos and compute average RGB in ROI (face only) ----
+# ---- videos and compute average RGB in ROI (face only) ----
 for idx, path in enumerate(video_paths, start=1):
     cap = cv2.VideoCapture(path)
     if not cap.isOpened():
@@ -53,11 +55,10 @@ for idx, path in enumerate(video_paths, start=1):
     video_name = f"video{idx}"
     video_data[video_name] = {"R": reds, "G": greens, "B": blues}
 
-    # Save the first face frame for visualization
     if first_face_frame is not None:
         first_frames[video_name] = first_face_frame
 
-# # ---- Step 2: Show first detected face frame for each video ----
+# # ----  first detected face frame for each video ----
 # for name, frame in first_frames.items():
 #     plt.figure(figsize=(5, 4))
 #     plt.imshow(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
@@ -65,8 +66,8 @@ for idx, path in enumerate(video_paths, start=1):
 #     plt.axis("off")
 #     plt.show()
 
-# ---- Step 3: Train one shared ICA model across all videos ----
-# Combine all RGB signals
+# ---- Train one shared ICA model across all video
+#combing all RGB signals
 combined_rgb = np.concatenate([
     np.vstack([v["R"], v["G"], v["B"]]).T for v in video_data.values()
 ], axis=0)
@@ -79,7 +80,7 @@ W_global = ica.components_
 print("\nShared ICA Mixing Matrix (3x3):\n", A_global)
 print("\nShared ICA Unmixing Matrix (3x3):\n", W_global)
 
-# ---- Step 4: Apply same ICA model to each video ----
+# ---- apply same ICA model to each video
 ica_results = {}
 for name, data in video_data.items():
     X = np.vstack([data["R"], data["G"], data["B"]]).T
@@ -87,7 +88,22 @@ for name, data in video_data.items():
     ica_results[name] = S_ica
 
 # ---- Do FFT
+def butter_bandpass(lowcut, highcut, fs, order=4):
+    nyq = 0.5 * fs
+    low = lowcut / nyq
+    high = highcut / nyq
+    b, a = butter(order, [low, high], btype='band')
+    return b, a
+
+def bandpass_filter(data, lowcut, highcut, fs, order=4):
+    b, a = butter_bandpass(lowcut, highcut, fs, order=order)
+    y = filtfilt(b, a, data)
+    return y
+
 ica_signals_list = [signals[:, 0] for signals in ica_results.values()]  # first ICA component
+fps =30
+lowcut = 0.8  # 42 bpm
+highcut = 3.5  # 210 bpm
 
 fig, axs = plt.subplots(2, 2, figsize=(12, 10))
 fig.suptitle("First ICA Component and FFT (per video)", fontsize=16)
@@ -100,9 +116,10 @@ for i, signal in enumerate(ica_signals_list):
     # --- Detrend / normalize ---
     sig = signal - np.mean(signal)
     sig /= np.std(sig) if np.std(sig) != 0 else 1
+    sig_filt = bandpass_filter(sig, lowcut, highcut, fs=fps)
 
     # --- FFT ---
-    fft_mag = np.abs(np.fft.rfft(sig))
+    fft_mag = np.abs(np.fft.rfft(sig_filt))
     fft_mag /= np.max(fft_mag) if np.max(fft_mag) != 0 else 1
 
     # --- Estimated BPM from dominant peak ---
@@ -120,7 +137,7 @@ for i, signal in enumerate(ica_signals_list):
     # Second y-axis for FFT
     ax2 = axs[row, col].twinx()
     ax2.plot(freq, fft_mag, color="purple", alpha=0.7, label="FFT magnitude")
-    ax2.set_xlim(0, 5)  # focus on 0–5 Hz (~0–300 bpm)
+    ax2.set_xlim(0.5, 5)  # focus on 0–5 Hz (~0–300 bpm)
     ax2.set_ylabel("Normalized FFT", color="purple")
 
     axs[row, col].grid(True)
