@@ -7,8 +7,19 @@ from scipy.signal import butter, filtfilt
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-video_paths = ["vid1.mov", "vid2.mov", "vid3.mov", "vid4.mov"]
+# video_paths = [
+#     "OV5640VideoCapture/Jonatan1_5640_part1.mp4",
+#     "OV5640VideoCapture/Jonatan1_5640_part2.mp4",
+#     "OV5640VideoCapture/Jonatan1_5640_part3.mp4",
+#     "OV5640VideoCapture/Jonatan1_5640_part4.mp4"
+# ]
 
+video_paths = [
+    "OV5640VideoCapture/Jonatan1_5640.mp4",
+    "OV5640VideoCapture/Jonatan1_5640.mp4",
+    "OV5640VideoCapture/Jonatan1_5640.mp4",
+    "OV5640VideoCapture/Jonatan1_5640.mp4"
+]
 video_data = {}
 first_frames = {}
 
@@ -59,12 +70,12 @@ for idx, path in enumerate(video_paths, start=1):
         first_frames[video_name] = first_face_frame
 
 # # ----  first detected face frame for each video ----
-# for name, frame in first_frames.items():
-#     plt.figure(figsize=(5, 4))
-#     plt.imshow(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-#     plt.title(f"First detected face - {name}")
-#     plt.axis("off")
-#     plt.show()
+for name, frame in first_frames.items():
+    plt.figure(figsize=(5, 4))
+    plt.imshow(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+    plt.title(f"First detected face - {name}")
+    plt.axis("off")
+    plt.show()
 
 # ---- Train one shared ICA model across all video
 #combing all RGB signals
