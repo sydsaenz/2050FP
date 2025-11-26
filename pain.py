@@ -15,10 +15,12 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fronta
 # ]
 
 video_paths = [
-    "OV5640VideoCapture/Jonatan1_5640.mp4",
-    "OV5640VideoCapture/Jonatan1_5640.mp4",
-    "OV5640VideoCapture/Jonatan1_5640.mp4",
-    "OV5640VideoCapture/Jonatan1_5640.mp4"
+    "OV5640VideoCapture/15sJonatan1.mp4",
+    "OV5640VideoCapture/15sJonatan2.mp4",
+    "OV5640VideoCapture/15sJonatan3.mp4",
+    "OV5640VideoCapture/15sSydney1.mp4", 
+    "OV5640VideoCapture/15sSydney2.mp4",
+    "OV5640VideoCapture/15sSydney3.mp4"
 ]
 video_data = {}
 first_frames = {}
@@ -87,15 +89,32 @@ ica = FastICA(n_components=3, random_state=0)
 ica.fit(combined_rgb)
 A_global = ica.mixing_
 W_global = ica.components_
+# A_global = np.array([[ 9.39138975, 25.84396883,  3.38354519], 
+#                     [ 7.01083647, 14.80061019,  3.74538927], 
+#                    [ 5.3278985,  3.9139291,   0.99219097]])
+# W_global = np.array([[ 1.59313926e-04, -7.64351956e-02,  2.87989435e-01], 
+#                      [ 8.01324875e-02, -5.36876972e-02, -7.06018999e-02], 
+#                      [-3.16956810e-01,  6.22227802e-01, -2.60078609e-01]])
 
 print("\nShared ICA Mixing Matrix (3x3):\n", A_global)
 print("\nShared ICA Unmixing Matrix (3x3):\n", W_global)
 
+# Shared ICA Mixing Matrix (3x3):
+#  [[ 9.39138975 25.84396883  3.38354519]
+#  [ 7.01083647 14.80061019  3.74538927]
+#  [ 5.3278985   3.9139291   0.99219097]]
+
+# Shared ICA Unmixing Matrix (3x3):
+#  [[ 1.59313926e-04 -7.64351956e-02  2.87989435e-01]
+#  [ 8.01324875e-02 -5.36876972e-02 -7.06018999e-02]
+#  [-3.16956810e-01  6.22227802e-01 -2.60078609e-01]]
 # ---- apply same ICA model to each video
 ica_results = {}
 for name, data in video_data.items():
     X = np.vstack([data["R"], data["G"], data["B"]]).T
     S_ica = ica.transform(X)  # apply shared ICA model
+    # Xc = X - np.mean(X)
+    # S_ica = Xc @ W_global.T
     ica_results[name] = S_ica
 
 # ---- Do FFT
@@ -116,7 +135,7 @@ fps =30
 lowcut = 0.8  # 42 bpm
 highcut = 3.5  # 210 bpm
 
-fig, axs = plt.subplots(2, 2, figsize=(12, 10))
+fig, axs = plt.subplots(2, 3, figsize=(12, 10))
 fig.suptitle("First ICA Component and FFT (per video)", fontsize=16)
 
 for i, signal in enumerate(ica_signals_list):
@@ -137,7 +156,7 @@ for i, signal in enumerate(ica_signals_list):
     dominant_freq = freq[np.argmax(fft_mag[1:])]  # skip DC bin
     bpm = dominant_freq * 60
 
-    row, col = divmod(i, 2)
+    row, col = divmod(i, 3)
 
     # Time-domain plot (ICA signal)
     axs[row, col].plot(t, sig, color="steelblue", alpha=0.8, label="ICA1 signal")
@@ -157,7 +176,7 @@ plt.tight_layout()
 plt.show()
 
 # ---- Step 3: Plot ICA components for all videos ----
-fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+fig, axes = plt.subplots(2, 3, figsize=(12, 8))
 axes = axes.flatten()
 
 for i, (name, S_ica) in enumerate(ica_results.items()):
@@ -174,7 +193,7 @@ plt.tight_layout()
 plt.show()
 
 # ---- Plot all 4 videos in a 2x2 grid ----
-fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+fig, axes = plt.subplots(2, 3, figsize=(12, 8))
 axes = axes.flatten()  # flatten 2x2 array into list for easy iteration
 
 for i, (name, data) in enumerate(video_data.items()):
