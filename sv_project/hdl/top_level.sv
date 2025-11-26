@@ -112,12 +112,6 @@ module top_level(
     // rgb output values
     logic [7:0]     red,green,blue;
 
-
-    // Center of Mass variables, just defined higher up now
-    logic [10:0] x_com, x_com_calc; //long term x_com and output from module, resp
-    logic [9:0]  y_com, y_com_calc; //long term y_com and output from module, resp
-    logic        new_com; //used to know when to update x_com and y_com ...
-
     // ** Handling input from the camera **
 
     // synchronizers to prevent metastability
@@ -434,53 +428,23 @@ module top_level(
     assign ss0_c = ss_c; //control upper four digit's cathodes!
     assign ss1_c = ss_c; //same as above but for lower four digits!
 
-    //Center of Mass Calculation: (you need to do)
-    //using x_com_calc and y_com_calc values
-    //Center of Mass:
-    center_of_mass com_m(
-        .clk(clk_pixel),
-        .rst(sys_rst_pixel),
-        .pixel_x(h_count_hdmi),  
-        .pixel_y(v_count_hdmi),
-        .pixel_valid(mask), //aka threshold
-        .calculate((new_frame_hdmi)),
-        .com_x(x_com_calc),
-        .com_y(y_com_calc),
-        .com_valid(new_com)
-    );
-    //grab logic for above
-    //update center of mass x_com, y_com based on new_com signal
-    always_ff @(posedge clk_pixel)begin
-        if (sys_rst_pixel)begin
-            x_com <= 0;
-            y_com <= 0;
-        end if(new_com)begin
-            x_com <= x_com_calc;
-            y_com <= y_com_calc;
-        end
-    end
 
     //image_sprite output:
     logic [7:0] img_red, img_green, img_blue;
 
-
-
-    //grab logic for above
-    //update center of mass x_com, y_com based on new_com signal
-    always_ff @(posedge clk_pixel)begin
-        if (sys_rst_pixel)begin
-            x_com <= 0;
-            y_com <= 0;
-        end if(new_com)begin
-            x_com <= x_com_calc;
-            y_com <= y_com_calc;
-        end
-    end
-
-
     // image sprite using hdmi h_count/v_count, x_com y_com to draw image or nothing
     //bring in an instance of your popcat image sprite! remember the correct mem files too!
     // You did this in week 5, just copy over what you did there.
+    word_sprite word
+    (
+        .pixel_clk(clk_pixel),
+        .rst(sys_rst_pixel),
+        .h_count(h_count_hdmi),
+        .v_count(v_count_hdmi),
+        .pixel_red(img_red),
+        .pixel_green(img_green),
+        .pixel_blue(img_blue)
+    );
 
     //crosshair output:
     logic [7:0] ch_red, ch_green, ch_blue;
@@ -488,9 +452,9 @@ module top_level(
     //Create Crosshair patter on center of mass:
     //0 cycle latency
     always_comb begin
-        ch_red   = ((v_count_hdmi==y_com) || (h_count_hdmi==x_com))?8'hFF:8'h00;
-        ch_green = ((v_count_hdmi==y_com) || (h_count_hdmi==x_com))?8'hFF:8'h00;
-        ch_blue  = ((v_count_hdmi==y_com) || (h_count_hdmi==x_com))?8'hFF:8'h00;
+        ch_red   = 8'h00;
+        ch_green = 8'h00;
+        ch_blue  = 8'h00;
     end
 
     // HDMI video signal generator

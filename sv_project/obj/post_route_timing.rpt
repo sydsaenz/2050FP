@@ -1,0 +1,122 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.1 (lin64) Build 6140274 Wed May 21 22:58:25 MDT 2025
+| Date         : Wed Nov 26 10:00:50 2025
+| Host         : eecs-digital-11 running 64-bit Ubuntu 24.04.3 LTS
+| Command      : report_timing -file obj/post_route_timing.rpt
+| Design       : top_level
+| Device       : 7s50-csga324
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (VIOLATED) :        -3.216ns  (required time - arrival time)
+  Source:                 vsg/h_count_reg[8]/C
+                            (rising edge-triggered cell FDRE clocked by clk_pixel_cw_hdmi  {rise@0.000ns fall@6.734ns period=13.468ns})
+  Destination:            tmds_green/cnt_reg[4]/D
+                            (rising edge-triggered cell FDRE clocked by clk_pixel_cw_hdmi  {rise@0.000ns fall@6.734ns period=13.468ns})
+  Path Group:             clk_pixel_cw_hdmi
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            13.468ns  (clk_pixel_cw_hdmi rise@13.468ns - clk_pixel_cw_hdmi rise@0.000ns)
+  Data Path Delay:        16.457ns  (logic 7.482ns (45.463%)  route 8.975ns (54.537%))
+  Logic Levels:           16  (CARRY4=2 DSP48E1=1 LUT1=1 LUT2=1 LUT3=1 LUT4=1 LUT5=2 LUT6=6 MUXF7=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    -1.578ns = ( 11.890 - 13.468 ) 
+    Source Clock Delay      (SCD):    -0.967ns
+    Clock Pessimism Removal (CPR):    0.562ns
+  Clock Uncertainty:      0.210ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.414ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_pixel_cw_hdmi rise edge)
+                                                      0.000     0.000 r  
+    N15                                               0.000     0.000 r  clk_100mhz (IN)
+                         net (fo=0)                   0.000     0.000    lcw/clk_in1
+    N15                  IBUF (Prop_ibuf_I_O)         1.440     1.440 r  lcw/clkin1_ibufg/O
+                         net (fo=1, routed)           1.233     2.673    lcw/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT5)
+                                                     -6.965    -4.291 r  lcw/mmcm_adv_inst/CLKOUT5
+                         net (fo=1, routed)           1.666    -2.625    lcw/clk_passthrough_clk_wiz_0
+    BUFGCTRL_X0Y8        BUFG (Prop_bufg_I_O)         0.096    -2.529 r  lcw/clkout6_buf/O
+                         net (fo=1, routed)           1.575    -0.954    wizard_hdmi/sysclk
+    MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.333    -4.286 r  wizard_hdmi/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.661    -2.625    wizard_hdmi/clk_pixel_cw_hdmi
+    BUFGCTRL_X0Y2        BUFG (Prop_bufg_I_O)         0.096    -2.529 r  wizard_hdmi/clkout1_buf/O
+                         net (fo=474, routed)         1.562    -0.967    vsg/clk_pixel
+    SLICE_X11Y15         FDRE                                         r  vsg/h_count_reg[8]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X11Y15         FDRE (Prop_fdre_C_Q)         0.456    -0.511 r  vsg/h_count_reg[8]/Q
+                         net (fo=22, routed)          0.856     0.345    vsg/out[8]
+    SLICE_X10Y15         LUT6 (Prop_lut6_I0_O)        0.124     0.469 r  vsg/sen_sprite_x3_i_1/O
+                         net (fo=1, routed)           0.534     1.003    word/A[5]
+    DSP48_X0Y6           DSP48E1 (Prop_dsp48e1_A[10]_P[19])
+                                                      3.841     4.844 f  word/sen_sprite_x3/P[19]
+                         net (fo=3, routed)           0.652     5.495    word/sen_sprite_x10[1]
+    SLICE_X10Y17         LUT1 (Prop_lut1_I0_O)        0.124     5.619 r  word/i__carry_i_3__0/O
+                         net (fo=1, routed)           0.000     5.619    word/i__carry_i_3__0_n_0
+    SLICE_X10Y17         CARRY4 (Prop_carry4_S[1]_O[2])
+                                                      0.578     6.197 r  word/sen_sprite_x1_inferred__0/i__carry/O[2]
+                         net (fo=16, routed)          1.072     7.270    word/O[2]
+    SLICE_X8Y17          LUT6 (Prop_lut6_I2_O)        0.301     7.571 r  word/i__carry__1_i_8/O
+                         net (fo=6, routed)           0.578     8.149    word/sen_sprite_x3_1
+    SLICE_X11Y17         LUT4 (Prop_lut4_I2_O)        0.124     8.273 r  word/i__carry__1_i_6/O
+                         net (fo=1, routed)           0.000     8.273    word/sensor_sprite/tmds[3]_i_11_0[1]
+    SLICE_X11Y17         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     8.823 r  word/sensor_sprite/_inferred__0/i__carry__1/CO[3]
+                         net (fo=2, routed)           0.958     9.780    vsg/CO[0]
+    SLICE_X15Y20         LUT6 (Prop_lut6_I0_O)        0.124     9.904 f  vsg/tmds[3]_i_11/O
+                         net (fo=1, routed)           0.000     9.904    vsg/tmds[3]_i_11_n_0
+    SLICE_X15Y20         MUXF7 (Prop_muxf7_I1_O)      0.217    10.121 f  vsg/tmds_reg[3]_i_4/O
+                         net (fo=36, routed)          0.810    10.931    rgbtoycrcb_m/img_red[0]
+    SLICE_X12Y21         LUT6 (Prop_lut6_I3_O)        0.299    11.230 r  rgbtoycrcb_m/cnt[2]_i_8/O
+                         net (fo=1, routed)           0.598    11.828    rgbtoycrcb_m/cnt[2]_i_8_n_0
+    SLICE_X14Y21         LUT5 (Prop_lut5_I2_O)        0.124    11.952 r  rgbtoycrcb_m/cnt[2]_i_2__0/O
+                         net (fo=25, routed)          0.358    12.309    rgbtoycrcb_m/cnt[2]_i_10
+    SLICE_X13Y21         LUT3 (Prop_lut3_I2_O)        0.124    12.433 r  rgbtoycrcb_m/cnt[2]_i_11__0/O
+                         net (fo=4, routed)           0.807    13.241    vsg/cnt_reg[2]_5
+    SLICE_X13Y23         LUT6 (Prop_lut6_I1_O)        0.124    13.365 r  vsg/cnt[4]_i_9__0/O
+                         net (fo=9, routed)           0.547    13.911    vsg/tmds[0]_i_2_0
+    SLICE_X12Y22         LUT2 (Prop_lut2_I0_O)        0.124    14.035 r  vsg/cnt[4]_i_15__0/O
+                         net (fo=3, routed)           0.777    14.812    vsg/cnt[4]_i_15__0_n_0
+    SLICE_X13Y25         LUT6 (Prop_lut6_I3_O)        0.124    14.936 r  vsg/cnt[4]_i_4__0/O
+                         net (fo=1, routed)           0.430    15.367    vsg/cnt[4]_i_4__0_n_0
+    SLICE_X13Y24         LUT5 (Prop_lut5_I2_O)        0.124    15.491 r  vsg/cnt[4]_i_1/O
+                         net (fo=1, routed)           0.000    15.491    tmds_green/D[3]
+    SLICE_X13Y24         FDRE                                         r  tmds_green/cnt_reg[4]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_pixel_cw_hdmi rise edge)
+                                                     13.468    13.468 r  
+    N15                                               0.000    13.468 r  clk_100mhz (IN)
+                         net (fo=0)                   0.000    13.468    lcw/clk_in1
+    N15                  IBUF (Prop_ibuf_I_O)         1.370    14.838 r  lcw/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    16.000    lcw/clk_in1_clk_wiz_0
+    MMCME2_ADV_X0Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT5)
+                                                     -7.221     8.779 r  lcw/mmcm_adv_inst/CLKOUT5
+                         net (fo=1, routed)           1.587    10.366    lcw/clk_passthrough_clk_wiz_0
+    BUFGCTRL_X0Y8        BUFG (Prop_bufg_I_O)         0.091    10.457 r  lcw/clkout6_buf/O
+                         net (fo=1, routed)           1.457    11.914    wizard_hdmi/sysclk
+    MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -3.129     8.785 r  wizard_hdmi/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.581    10.366    wizard_hdmi/clk_pixel_cw_hdmi
+    BUFGCTRL_X0Y2        BUFG (Prop_bufg_I_O)         0.091    10.457 r  wizard_hdmi/clkout1_buf/O
+                         net (fo=474, routed)         1.433    11.890    tmds_green/clk_pixel
+    SLICE_X13Y24         FDRE                                         r  tmds_green/cnt_reg[4]/C
+                         clock pessimism              0.562    12.452    
+                         clock uncertainty           -0.210    12.243    
+    SLICE_X13Y24         FDRE (Setup_fdre_C_D)        0.032    12.275    tmds_green/cnt_reg[4]
+  -------------------------------------------------------------------
+                         required time                         12.275    
+                         arrival time                         -15.491    
+  -------------------------------------------------------------------
+                         slack                                 -3.216    
+
+
+
+
