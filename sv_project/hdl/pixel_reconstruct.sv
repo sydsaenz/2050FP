@@ -56,7 +56,11 @@ module pixel_reconstruct
                     last_sampled_data <= camera_data;
                     half_pixel_ready <= ~half_pixel_ready;
                     if (half_pixel_ready) begin 
-                        pixel_data <= {last_sampled_data, camera_data};
+                        if (pixel_h_count < 200 || pixel_h_count > 600 || pixel_v_count < 100 || pixel_v_count > 620) begin
+                            pixel_data <= 0;
+                        end else begin
+                            pixel_data <= {last_sampled_data, camera_data};
+                        end
                         pixel_h_count <= pixel_h_count + 1;
                         pixel_valid <= 1;
                     end
