@@ -34,6 +34,8 @@ module letter_sprite #(
     always_ff @(posedge pixel_clk) begin
         if (next) begin
             next <= 0;
+            // reading the bit of letter[letter_y] which represents the vertical line 
+            // 4-letter_x because letter encoding is in reverse
             pixel_color <= (letter[letter_y] & (5'd1 << (5'd4-letter_x))) > 0 ? 8'hff : 0;
         end else begin
             next <= 1;

@@ -237,10 +237,7 @@ module top_level(
     logic [FB_SIZE-1:0] addrb; //used to lookup address in memory for reading from buffer
     logic               good_addrb; //used to indicate within valid frame for scaling
     
-    // TODO: scale logic! copy in only the 4X zoom logic from last week.
-
     always_ff @(posedge clk_pixel) begin
-        // you already wrote this!
         // if (btn[1])begin //1X scaling from frame buffer
         //    addrb <= h_count_hdmi + 320*v_count_hdmi; //change me
         //    good_addrb <= (h_count_hdmi<320)&&(v_count_hdmi<180); //change me
@@ -441,6 +438,8 @@ module top_level(
         .rst(sys_rst_pixel),
         .h_count(h_count_hdmi),
         .v_count(v_count_hdmi),
+        .sensor_hr(10'd64),
+        .camera_hr(10'd67),
         .pixel_red(img_red),
         .pixel_green(img_green),
         .pixel_blue(img_blue)

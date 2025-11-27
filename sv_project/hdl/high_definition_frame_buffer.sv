@@ -246,7 +246,7 @@ module high_definition_frame_buffer(
     // TODO: assign frame_buff_tready
     // This should be done combinationally (either in one-line assign or an always_comb block)
     always_comb begin
-        frame_buff_tready = active_draw_hdmi ? (frame_buff_tlast ? h_count_hdmi==1279 && v_count_hdmi==719 : 1) : 0; // change me!!
+        frame_buff_tready = active_draw_hdmi ? (frame_buff_tlast ? h_count_hdmi==1279 && v_count_hdmi==719 : 1) : 0;
     end
 
 

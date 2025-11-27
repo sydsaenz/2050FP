@@ -1,8 +1,8 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.1 (lin64) Build 6140274 Wed May 21 22:58:25 MDT 2025
-| Date         : Wed Nov 26 10:00:23 2025
-| Host         : eecs-digital-11 running 64-bit Ubuntu 24.04.3 LTS
+| Date         : Wed Nov 26 15:43:08 2025
+| Host         : eecs-digital-34 running 64-bit Ubuntu 24.04.3 LTS
 | Command      : report_utilization -file obj/post_place_util_hierarchical.rpt -hierarchical -hierarchical_depth 4 -hierarchical_min_primitive_count 0
 | Design       : top_level
 | Device       : xc7s50csga324-1
@@ -22,16 +22,16 @@ Table of Contents
 +----------------------------------------------+----------------------------------------------+------------+------------+---------+------+------+--------+--------+------------+
 |                   Instance                   |                    Module                    | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs | RAMB36 | RAMB18 | DSP Blocks |
 +----------------------------------------------+----------------------------------------------+------------+------------+---------+------+------+--------+--------+------------+
-| top_level                                    |                                        (top) |       4062 |       4028 |      34 |    0 | 3477 |     36 |      1 |          9 |
-|   (top_level)                                |                                        (top) |          4 |          4 |       0 |    0 |  173 |      0 |      0 |          0 |
+| top_level                                    |                                        (top) |       4720 |       4686 |      34 |    0 | 3609 |     36 |      1 |         12 |
+|   (top_level)                                |                                        (top) |          3 |          3 |       0 |    0 |  177 |      0 |      0 |          0 |
 |   blue_ser                                   |                              tmds_serializer |          0 |          0 |       0 |    0 |    0 |      0 |      0 |          0 |
-|   crw                                        |                             camera_registers |        131 |        131 |       0 |    0 |  104 |      0 |      0 |          0 |
-|     (crw)                                    |                             camera_registers |         15 |         15 |       0 |    0 |   42 |      0 |      0 |          0 |
+|   crw                                        |                             camera_registers |        117 |        117 |       0 |    0 |  104 |      0 |      0 |          0 |
+|     (crw)                                    |                             camera_registers |         13 |         13 |       0 |    0 |   42 |      0 |      0 |          0 |
 |     aia                                      |                               addr_increment |          8 |          8 |       0 |    0 |    9 |      0 |      0 |          0 |
-|     sccb_c                                   |                                   i2c_master |        108 |        108 |       0 |    0 |   53 |      0 |      0 |          0 |
-|   frame_buffer                               | xilinx_true_dual_port_read_first_2_clock_ram |         52 |         52 |       0 |    0 |    0 |     32 |      0 |          0 |
+|     sccb_c                                   |                                   i2c_master |         96 |         96 |       0 |    0 |   53 |      0 |      0 |          0 |
+|   frame_buffer                               | xilinx_true_dual_port_read_first_2_clock_ram |         43 |         43 |       0 |    0 |    0 |     32 |      0 |          0 |
 |   green_ser                                  |                            tmds_serializer_0 |          0 |          0 |       0 |    0 |    0 |      0 |      0 |          0 |
-|   highdef_fb                                 |                 high_definition_frame_buffer |       3297 |       3263 |      34 |    0 | 2974 |      4 |      0 |          0 |
+|   highdef_fb                                 |                 high_definition_frame_buffer |       3306 |       3272 |      34 |    0 | 2974 |      4 |      0 |          0 |
 |     (highdef_fb)                             |                 high_definition_frame_buffer |          1 |          1 |       0 |    0 |    0 |      0 |      0 |          0 |
 |     camera_data_fifo                         |                             clockdomain_fifo |        104 |        104 |       0 |    0 |  150 |      2 |      0 |          0 |
 |       (camera_data_fifo)                     |                             clockdomain_fifo |          1 |          1 |       0 |    0 |    0 |      0 |      0 |          0 |
@@ -39,39 +39,48 @@ Table of Contents
 |         (xpm_fifo_axis_inst)                 |                             xpm_fifo_axis__1 |          2 |          2 |       0 |    0 |    0 |      0 |      0 |          0 |
 |         gaxis_rst_sync.xpm_cdc_sync_rst_inst |                          xpm_cdc_sync_rst__5 |          0 |          0 |       0 |    0 |    3 |      0 |      0 |          0 |
 |         xpm_fifo_base_inst                   |                             xpm_fifo_base__1 |        101 |        101 |       0 |    0 |  147 |      2 |      0 |          0 |
-|     ddr3_top                                 |                                     ddr3_top |       2708 |       2708 |       0 |    0 | 2208 |      0 |      0 |          0 |
+|     ddr3_top                                 |                                     ddr3_top |       2717 |       2717 |       0 |    0 | 2208 |      0 |      0 |          0 |
 |       (ddr3_top)                             |                                     ddr3_top |          1 |          1 |       0 |    0 |    0 |      0 |      0 |          0 |
-|       ddr3_controller_inst                   |                              ddr3_controller |       2693 |       2693 |       0 |    0 | 2185 |      0 |      0 |          0 |
+|       ddr3_controller_inst                   |                              ddr3_controller |       2702 |       2702 |       0 |    0 | 2185 |      0 |      0 |          0 |
 |       ddr3_phy_inst                          |                                     ddr3_phy |         15 |         15 |       0 |    0 |   23 |      0 |      0 |          0 |
-|     pdfifo                                   |                           clockdomain_fifo_5 |        104 |        104 |       0 |    0 |  150 |      2 |      0 |          0 |
-|       (pdfifo)                               |                           clockdomain_fifo_5 |          2 |          2 |       0 |    0 |    0 |      0 |      0 |          0 |
+|     pdfifo                                   |                          clockdomain_fifo_11 |        104 |        104 |       0 |    0 |  150 |      2 |      0 |          0 |
+|       (pdfifo)                               |                          clockdomain_fifo_11 |          2 |          2 |       0 |    0 |    0 |      0 |      0 |          0 |
 |       xpm_fifo_axis_inst                     |                                xpm_fifo_axis |        103 |        103 |       0 |    0 |  150 |      2 |      0 |          0 |
 |         (xpm_fifo_axis_inst)                 |                                xpm_fifo_axis |          2 |          2 |       0 |    0 |    0 |      0 |      0 |          0 |
 |         gaxis_rst_sync.xpm_cdc_sync_rst_inst |                             xpm_cdc_sync_rst |          0 |          0 |       0 |    0 |    3 |      0 |      0 |          0 |
 |         xpm_fifo_base_inst                   |                                xpm_fifo_base |        101 |        101 |       0 |    0 |  147 |      2 |      0 |          0 |
 |     stacker_inst                             |                                      stacker |         11 |         11 |       0 |    0 |  253 |      0 |      0 |          0 |
-|     traffic_generator_inst                   |                            traffic_generator |        231 |        197 |      34 |    0 |   80 |      0 |      0 |          0 |
+|     traffic_generator_inst                   |                            traffic_generator |        232 |        198 |      34 |    0 |   80 |      0 |      0 |          0 |
 |       (traffic_generator_inst)               |                            traffic_generator |         71 |         71 |       0 |    0 |    4 |      0 |      0 |          0 |
 |       mcf                                    |                                 command_fifo |         55 |         21 |      34 |    0 |   12 |      0 |      0 |          0 |
-|       r_add                                  |                                  evt_counter |         65 |         65 |       0 |    0 |   32 |      0 |      0 |          0 |
-|       w_add                                  |                                evt_counter_6 |         42 |         42 |       0 |    0 |   32 |      0 |      0 |          0 |
+|       r_add                                  |                                  evt_counter |         64 |         64 |       0 |    0 |   32 |      0 |      0 |          0 |
+|       w_add                                  |                               evt_counter_12 |         42 |         42 |       0 |    0 |   32 |      0 |      0 |          0 |
 |     unstacker_inst                           |                                    unstacker |        139 |        139 |       0 |    0 |  133 |      0 |      0 |          0 |
 |   lcw                                        |                                lab06_clk_wiz |          0 |          0 |       0 |    0 |    0 |      0 |      0 |          0 |
-|   mssc                                       |                                    lab05_ssc |         39 |         39 |       0 |    0 |   25 |      0 |      0 |          0 |
-|   mt                                         |                                    threshold |          5 |          5 |       0 |    0 |    1 |      0 |      0 |          0 |
-|   nolabel_line154                            |                            pixel_reconstruct |         34 |         34 |       0 |    0 |   50 |      0 |      0 |          0 |
+|   mcs                                        |                               channel_select |         57 |         57 |       0 |    0 |    0 |      0 |      0 |          0 |
+|   mssc                                       |                                    lab05_ssc |         35 |         35 |       0 |    0 |   25 |      0 |      0 |          0 |
+|   mt                                         |                                    threshold |          0 |          0 |       0 |    0 |    1 |      0 |      0 |          0 |
+|   nolabel_line154                            |                            pixel_reconstruct |         43 |         43 |       0 |    0 |   50 |      0 |      0 |          0 |
 |   red_ser                                    |                            tmds_serializer_1 |          1 |          1 |       0 |    0 |    1 |      0 |      0 |          0 |
 |   registers                                  |            xilinx_single_port_ram_read_first |          7 |          7 |       0 |    0 |    2 |      0 |      1 |          0 |
-|   rgbtoycrcb_m                               |                                 rgb_to_ycrcb |        100 |        100 |       0 |    0 |   50 |      0 |      0 |          7 |
-|   tmds_blue                                  |                                 tmds_encoder |          8 |          8 |       0 |    0 |   14 |      0 |      0 |          0 |
-|   tmds_green                                 |                               tmds_encoder_2 |          8 |          8 |       0 |    0 |   14 |      0 |      0 |          0 |
-|   tmds_red                                   |                               tmds_encoder_3 |          8 |          8 |       0 |    0 |   14 |      0 |      0 |          0 |
-|   vsg                                        |                                video_sig_gen |        248 |        248 |       0 |    0 |   25 |      0 |      0 |          0 |
+|   rgbtoycrcb_m                               |                                 rgb_to_ycrcb |         82 |         82 |       0 |    0 |   50 |      0 |      0 |          7 |
+|   tmds_blue                                  |                                 tmds_encoder |          3 |          3 |       0 |    0 |   14 |      0 |      0 |          0 |
+|   tmds_green                                 |                               tmds_encoder_2 |          4 |          4 |       0 |    0 |   14 |      0 |      0 |          0 |
+|   tmds_red                                   |                               tmds_encoder_3 |          1 |          1 |       0 |    0 |   14 |      0 |      0 |          0 |
+|   vsg                                        |                                video_sig_gen |        587 |        587 |       0 |    0 |   38 |      0 |      0 |          0 |
 |   wizard_hdmi                                |                              cw_hdmi_clk_wiz |          0 |          0 |       0 |    0 |    0 |      0 |      0 |          0 |
-|   word                                       |                                  word_sprite |        128 |        128 |       0 |    0 |   30 |      0 |      0 |          2 |
-|     (word)                                   |                                  word_sprite |         16 |         16 |       0 |    0 |    0 |      0 |      0 |          2 |
-|     cam_sprite                               |                                letter_sprite |         56 |         56 |       0 |    0 |   15 |      0 |      0 |          0 |
-|     sensor_sprite                            |                              letter_sprite_4 |         56 |         56 |       0 |    0 |   15 |      0 |      0 |          0 |
+|   word                                       |                                  word_sprite |        437 |        437 |       0 |    0 |  145 |      0 |      0 |          5 |
+|     (word)                                   |                                  word_sprite |          0 |          0 |       0 |    0 |    0 |      0 |      0 |          1 |
+|     cam_sprite                               |                                letter_sprite |         44 |         44 |       0 |    0 |   15 |      0 |      0 |          0 |
+|     camera_hr_dig                            |                                       digits |         52 |         52 |       0 |    0 |   16 |      0 |      0 |          2 |
+|     genblk1[0].sensor_heartrate              |                                number_sprite |         40 |         40 |       0 |    0 |   14 |      0 |      0 |          0 |
+|     genblk1[1].sensor_heartrate              |                              number_sprite_4 |         40 |         40 |       0 |    0 |   14 |      0 |      0 |          0 |
+|     genblk1[2].sensor_heartrate              |                              number_sprite_5 |         42 |         42 |       0 |    0 |   14 |      0 |      0 |          0 |
+|     genblk2[0].camera_heartrate              |                              number_sprite_6 |         40 |         40 |       0 |    0 |   14 |      0 |      0 |          0 |
+|     genblk2[1].camera_heartrate              |                              number_sprite_7 |         40 |         40 |       0 |    0 |   14 |      0 |      0 |          0 |
+|     genblk2[2].camera_heartrate              |                              number_sprite_8 |         42 |         42 |       0 |    0 |   14 |      0 |      0 |          0 |
+|     sensor_hr_dig                            |                                     digits_9 |         51 |         51 |       0 |    0 |   15 |      0 |      0 |          2 |
+|     sensor_sprite                            |                             letter_sprite_10 |         46 |         46 |       0 |    0 |   15 |      0 |      0 |          0 |
 +----------------------------------------------+----------------------------------------------+------------+------------+---------+------+------+--------+--------+------------+
 * Note: The sum of lower-level cells may be larger than their parent cells total, due to cross-hierarchy LUT combining
 
