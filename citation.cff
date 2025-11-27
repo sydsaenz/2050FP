@@ -1,10 +1,10 @@
     cff-version: 1.2.0
     message: "If you use this software, please cite it as below."
     authors:
-      - family-names: "Sydney"
-        given-names: "Saenz"
-      - family-names: "Jonatan"
-        given-names: "Hernandez-Mijangos"
+      - family-names: "Saenz"
+        given-names: "Sydney"
+      - family-names: "Hernandez-Mijangos"
+        given-names: "Jonatan"
     title: "6.2050 Final Project"
     date-released: 2025-11-26
     url: "https://github.com/sydsaenz/2050FP"
